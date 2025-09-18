@@ -42,12 +42,20 @@ const getStudentInfo = async (id, htno) => {
   );
 };
 
-const getHexCode = async (rfid) => {
-  return await axios.post(
-    `${API_URL}/getHex`,
+const spotRegistration = async (htno, eventId) => {
+  return await axios.get(
+    `${API_URL}/spotregistration?htno=${htno}&event_id=${eventId}&type=Spot`,
+    {},
     {
-      rfid,
-    },
+      headers: getAuthHeaders(),
+    }
+  );
+};
+
+const markManualAttendance = async (htno, eventId) => {
+  return await axios.get(
+    `${API_URL}/mark-attendance-manual?event_id=${eventId}&htno=${htno}`,
+    {},
     {
       headers: getAuthHeaders(),
     }
@@ -56,10 +64,11 @@ const getHexCode = async (rfid) => {
 
 const dashboardServices = {
   getTableRows,
-  getHexCode,
   getEventsData,
   getEventStatsById,
+  spotRegistration,
   getStudentInfo,
+  markManualAttendance,
 };
 
 export default dashboardServices;
